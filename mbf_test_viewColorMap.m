@@ -1,0 +1,10 @@
+plot_range.x_start = 100;
+plot_range.x_end = 700;
+plot_range.y_start = -0.005;
+plot_range.y_end = 0.005;
+plot_range.interval = 100;
+file_list = cell(3, 1);
+file_list{1, 1} = 'test.txt';
+file_list{2, 1} = 'test2.txt';
+file_list{3, 1} = 'test2.txt';
+fig = mbf_viewColorMap(file_list, 0, 'test viewColorMap window', plot_range, 'normal');
