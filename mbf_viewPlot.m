@@ -22,4 +22,5 @@ function props = mbf_viewPlot(fig, labels, file_path, move_range, window_name, p
     legend(labels);
     props.fig = fig;
     props.labels = labels;
+    props.data = data;
 end
