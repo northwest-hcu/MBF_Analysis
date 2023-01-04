@@ -18,4 +18,5 @@ function props = mbf_viewAveragePlot(file_list, move_range, window_name, plot_ra
         ylim([plot_range.y_start plot_range.y_end]);
     end
     props.fig = fig;
+    props.data = data;
 end
