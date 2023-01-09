@@ -1,0 +1,1 @@
+ans = mbf_loadData('./test.txt', 0);

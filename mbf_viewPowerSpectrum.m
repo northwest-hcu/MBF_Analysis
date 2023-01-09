@@ -1,6 +1,6 @@
 function props = mbf_viewPowerSpectrum(file_list, move_range, window_name, plot_range)
     position_map = mbf_getPosition(true);
-    fig = figure('Name', strcat(window_name, '(スペクトル解析)'));
+    fig = figure('Name', strcat(window_name, '(スペクトル解析)', 'NumberTitle', 'off'));
     labels = cell(height(file_list), 1);
     plot_size = 0.04;  % 各グラフの大きさ(大きすぎると他のグラフと重なり、消してしまう)
     spread_rate = 1.7; % グラフ配置の拡散率
@@ -12,7 +12,7 @@ function props = mbf_viewPowerSpectrum(file_list, move_range, window_name, plot_
             pos = [position_map(ch, 2) * spread_rate + 0.5 - (plot_size / 2), position_map(ch, 3) * spread_rate + 0.5 - (plot_size / 2), plot_size, plot_size];
             subplot('Position', pos);
             % 各チャネルの周波数解析結果を取得
-            values = mbf_getPowerSpectrum(times, data.values, 1000);
+            values = mbf_getPowerSpectrum(times, data.values(:, ch), 1000);
             hold on;
             plot(values.frequency, values.power);
             title(strcat(num2str(ch), ' ch'));
