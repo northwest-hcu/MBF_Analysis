@@ -1,6 +1,6 @@
 function props = mbf_viewPowerSpectrum(file_list, move_range, window_name, plot_range)
     position_map = mbf_getPosition(true);
-    fig = figure('Name', strcat(window_name, '(スペクトル解析)', 'NumberTitle', 'off'));
+    fig = figure('Name', strcat(window_name, '(スペクトル解析)'), 'NumberTitle', 'off');
     labels = cell(height(file_list), 1);
     plot_size = 0.04;  % 各グラフの大きさ(大きすぎると他のグラフと重なり、消してしまう)
     spread_rate = 1.7; % グラフ配置の拡散率
