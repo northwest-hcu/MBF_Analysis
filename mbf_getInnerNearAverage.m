@@ -1,4 +1,4 @@
-function file_lists = mbf_getInnerNearAverage(file_list, move_range, threshold)
+function file_lists = mbf_getInnerNearAverage(file_list, move_range, threshold, dropout_channels)
     results = mbf_calcAverage(file_list, move_range);
     average = results.average;
     selected_file_list = cell(0, 1);
@@ -8,6 +8,9 @@ function file_lists = mbf_getInnerNearAverage(file_list, move_range, threshold)
         flag = true;
         for t = 1:length(data.units)
             for ch = 1:data.channel_length
+                if ismember(ch, dropout_channels)
+                    continue;
+                end
                 if abs(data.values(t, ch) - average(t, ch)) > threshold
                     disp(strcat(file_list{i, 1}, ' is over range.(', num2str(data.units(t)), 'ms)(', num2str(ch), 'ch)'));
                     flag = false;
