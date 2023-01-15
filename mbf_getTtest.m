@@ -1,4 +1,4 @@
-function props = mbf_getTtest(file_list1, file_list2, move_range)
+function props = mbf_getTtest(file_list1, file_list2, move_range, same_point)
     disp(strcat('標本数 (1)', num2str(length(file_list1)), ' (2)', num2str(length(file_list2))));
     file_lists = cell(2, 1);
     file_lists{1, 1} = file_list1;
@@ -15,40 +15,38 @@ function props = mbf_getTtest(file_list1, file_list2, move_range)
             store_values{i, 1}(:, :, f) = data.values;
         end
     end
-    test_flags = zeros(channel_length, 2);
+    test_flags = zeros(channel_length, 1);
     test_results = zeros(channel_length, 1);
     test_position = zeros(channel_length, 2);
     ave1 = mbf_calcAverage(file_list1, 20);
     ave2 = mbf_calcAverage(file_list2, 20);
     for ch = 1:channel_length
-        % 200ms ~ 800msの区間に限定して見る(データは-100ms ~ 1600ms, 1kHz)
-        [max_1_value, max_1_index] = max(ave1.average(300:900, ch));
-        [min_1_value, min_1_index] = min(ave1.average(300:900, ch));
-        [max_2_value, max_2_index] = max(ave2.average(300:900, ch));
-        [min_2_value, min_2_index] = min(ave2.average(300:900, ch));
-        % 絶対値の差が最大の時をピークとして見る
-        if abs(abs(max_1_value) - abs(max_2_value)) < abs(abs(min_1_value) - abs(min_2_value))
-            t1 = min_1_index + 300;
-            v1 = abs(min_1_value);
-            t2 = min_2_index + 300;
-            v2 = abs(min_2_value);
+        % 200ms ~ 1200msの区間に限定して見る(データは-100ms ~ 1600ms, 1kHz)
+        [max_1_value, max_1_index] = max(ave1.average(300:1300, ch));
+        [min_1_value, min_1_index] = min(ave1.average(300:1300, ch));
+        [max_2_value, max_2_index] = max(ave2.average(300:1300, ch));
+        [min_2_value, min_2_index] = min(ave2.average(300:1300, ch));
+        if ~same_point
+            if max(abs(max_1_value), abs(max_2_value)) < max(abs(min_1_value), abs(min_2_value))
+                t1 = min_1_index + 300;
+                t2 = min_2_index + 300;
+            else
+                t1 = max_1_index + 300;
+                t2 = max_2_index + 300;
+            end
+        % 同地点比較の場合
         else
-            t1 = max_1_index + 300;
-            v1 = abs(max_1_value);
-            t2 = max_2_index + 300;
-            v2 = abs(max_2_value);
+            if abs(min_1_value) > abs(max_1_value)
+                t1 = min_1_index + 300;
+                t2 = min_1_index + 300;
+            else
+                t1 = max_1_index + 300;
+                t2 = max_1_index + 300;
+            end
         end
         % 該当時間を保存
         test_position(ch, 1) = data.units(t1);
         test_position(ch, 2) = data.units(t2);
-        % どちらの絶対値が大きかったか保存
-        if v1 > v2
-            test_flags(ch, 2) = 1;
-        elseif v1 < v2
-            test_flags(ch, 2) = 2;
-        else
-            test_flags(ch, 2) = 0;
-        end
         [test_flags(ch, 1), test_results(ch, 1)] = ttest2(store_values{1, 1}(t1, ch, :), store_values{2, 1}(t2, ch, :));
     end
     props.flags = test_flags; % 有意差があれば1, なければ0
