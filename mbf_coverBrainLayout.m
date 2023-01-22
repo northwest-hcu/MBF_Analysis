@@ -1,0 +1,33 @@
+function points = mbf_coverBrainLayout(fig, points)
+    % figureオブジェクトをマウント
+    figure(fig);
+    hold on;
+    img = imread('./brain.png');
+    img = flip(img);
+    [h, w, ~] = size(img);
+    y_start = -0.35;
+    y_end = 0.35;
+    x_start = y_start * (w / h);
+    x_end = y_end * (w / h);
+    
+    if points.flag
+        plot(points.data(:, 1), points.data(:, 2), '.', 'MarkerSize', 1, 'MarkerFaceColor', 'none', 'MarkerEdgeColor', [0.5 0.5 0.5]);
+    else
+        points.data = zeros(0, 2);
+        points.flag = true;
+        for i=1:h
+            for j=1:w
+                if img(i, j, :) <= [200 200 200] % RGB value
+                    % img_points(i, j) = 1; % transparent rate
+                    y = ((y_end - y_start) / h) * i + y_start;
+                    x = ((x_end - x_start) / w) * j + x_start;
+                    data = zeros(1, 2);
+                    data(1, 1) = x;
+                    data(1, 2) = y;
+                    points.data = vertcat(points.data, data);
+                    plot(x, y, '.', 'MarkerSize', 1, 'MarkerFaceColor', 'none', 'MarkerEdgeColor', [0.5 0.5 0.5]);
+                end
+            end
+        end
+    end
+end

@@ -20,6 +20,7 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
     if rem(graph_count, 5) > 0
         line = line + 1;
     end
+    points.flag = false;
     % 各グラフの表示
     for i = 1:graph_count
         colormap('jet');
@@ -38,17 +39,22 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
             subplot(line, 5, i);
         end
         % カラーマップの計算・描画
+        points = mbf_coverHeadLayout(fig, points);
         Vq = griddata(position_map(:, 2), position_map(:, 3), data.average(index, :), Xq, Yq);
+        % 等高線行列とcontourオブジェクトを得る(前者は使わないため破棄)
         [~, c] = contourf(Xq, Yq, Vq);
         set(c, 'edgecolor', 'none');
         set(c, 'LineColor', 'none');
-        caxis([plot_range.y_start plot_range.y_end]);
+        set(c, 'FaceAlpha', 0.8);
+        clim([plot_range.y_start plot_range.y_end]);
         title(strcat(num2str(t), 'ms'));
-        mbf_coverHeadLayout(fig);
         % 横軸・縦軸の非表示
         ax = gca;
         ax.XTickLabel = cell(size(ax.XTickLabel));
         ax.YTickLabel = cell(size(ax.YTickLabel));
+        pbaspect([1 1 1]);
+        clear Vq;
+        clear c;
     end
     c = colorbar('southoutside');
     c.Position(1:4) = [0.1, 0.06, 0.8, 0.01];

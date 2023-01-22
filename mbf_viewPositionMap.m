@@ -5,5 +5,6 @@ function mbf_viewPositionMap(custom)
     for i=1:height(position_map)
         text(position_map(i, 2), position_map(i, 3), string(position_map(i, 1)));
     end
-    mbf_coverHeadLayout(fig);
+    points.flag = false;
+    mbf_coverHeadLayout(fig, points);
 end

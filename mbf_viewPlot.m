@@ -13,9 +13,12 @@ function props = mbf_viewPlot(fig, labels, file_path, move_range, window_name, p
         % 座標をposition_map.csvからもってきたデータをもとに指定
         pos = [position_map(ch, 2) * spread_rate + 0.5 - (plot_size / 2), position_map(ch, 3) * spread_rate + 0.5 - (plot_size / 2), plot_size, plot_size];
         subplot('Position', pos);
-        plot(units, values(:, ch));
+        plot(units, values(:, ch),'LineWidth',1);
         hold on;
-        title(strcat(num2str(ch), ' ch'));
+        %title(strcat(num2str(ch), ' ch'));
+        if ch == 57
+            title('Cz');
+        end
         xlim([plot_range.x_start plot_range.x_end]);
         ylim([plot_range.y_start plot_range.y_end]);
     end

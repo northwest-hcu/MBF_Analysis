@@ -1,4 +1,4 @@
-function mbf_coverHeadLayout(fig)
+function points = mbf_coverHeadLayout(fig, points)
     % figureオブジェクトをマウント
     figure(fig);
     hold on;
@@ -16,6 +16,21 @@ function mbf_coverHeadLayout(fig)
     %plot(layoutline3(:,1), layoutline3(:,2), 'g', 'LineWidth',1, 'color', [222,184,135]./255);
     plot(layoutline4(:,1), layoutline4(:,2), 'k', 'LineWidth',3);
     %plot(layoutline4(:,1), layoutline4(:,2), 'g', 'LineWidth',1, 'color', [222,184,135]./255);
+%     img = imread('./brain.png');
+%     img = flip(img);
+%     [h, w, ~] = size(img);
+%     img_alpha = ones(h, w, 3);
+%     for i=1:h
+%         for j=1:w
+%             if img(i, j, :) <= [230 230 230] % RGB value
+%                 img_alpha(i, j, :) = [0.4 0.4 0.4]; % transparent rate
+%             end
+%         end
+%     end
+% 
+%     image([-0.35 0.35]*(w/h), [-0.35, 0.35], img_alpha);
+    points = mbf_coverBrainLayout(fig, points);
     xlim([-0.6 0.6]);
     ylim([-0.6 0.6]);
+    pbaspect([1 1 1]);
 end
