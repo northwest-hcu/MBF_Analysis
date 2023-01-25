@@ -1,7 +1,7 @@
 function props = mbf_loadData(file_path, move_range)
     file_props = dir(file_path);              % ファイルの各プロパティ
     if isempty(file_props)
-        disp(strcat('File ', file_path, ' is not found.'));
+        disp(strcat('File: ', file_path, ' is not found.'));
         return;
     end
     file_data = importdata(file_path);             % ファイルの読み込み

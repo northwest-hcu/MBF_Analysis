@@ -26,6 +26,7 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
     tile.Padding  = 'compact';
     % 各グラフの表示
     for i = 1:graph_count
+        nexttile;
         colormap('jet');
         % 対応する時刻とデータのインデックスを計算
         if i == 1
@@ -55,11 +56,11 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
         ax = gca;
         ax.XTickLabel = cell(size(ax.XTickLabel));
         ax.YTickLabel = cell(size(ax.YTickLabel));
-        pbaspect([1 1 1]);
+        % pbaspect([1 1 1]);
         clear Vq;
         clear c;
     end
     c = colorbar('southoutside');
-    c.Position(1:4) = [0.1, 0.06, 0.8, 0.03];
+    c.Position(1:4) = [0.1, 0.03, 0.8, 0.01];
     props.fig = fig;
 end

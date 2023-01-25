@@ -18,11 +18,11 @@ function points = mbf_coverBrainLayout(fig, points)
         for i=1:h
             for j=1:w
                 if img(i, j, :) <= [200 200 200] % RGB value
-                    y = ((y_end - y_start) / h) * i + y_start;
-                    x = ((x_end - x_start) / w) * j + x_start;
+                    y = (((y_end - y_start) / h) * i + y_start);% * (2 / pi);
+                    x = (((x_end - x_start) / w) * j + x_start);%* (2 / pi);
                     data = zeros(1, 2);
-                    data(1, 1) = x * (2/pi);
-                    data(1, 2) = y * (2/pi);
+                    data(1, 1) = x;
+                    data(1, 2) = y;
                     points.data = vertcat(points.data, data);
                     plot(x, y, '.', 'MarkerSize', 1, 'MarkerFaceColor', 'none', 'MarkerEdgeColor', [0.5 0.5 0.5]);
                 end
