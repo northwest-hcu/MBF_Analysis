@@ -11,16 +11,19 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
         [Xq, Yq] = meshgrid(-0.5:0.001:0.5, -0.5:0.001:0.5);
     end
     % グラフ数の計算
-    graph_count = (plot_range.x_end - plot_range.x_start) / plot_range.interval;
-    if rem(plot_range.x_end - plot_range.x_start, plot_range.interval) > 0
-        graph_count = graph_count + 1;
-    end
+    graph_count = fix((plot_range.x_end - plot_range.x_start) / plot_range.interval) + 1;
+%     if rem(plot_range.x_end - plot_range.x_start, plot_range.interval) > 0
+%         graph_count = graph_count + 1;
+%     end
     % プロット行数の計算
     line = fix(graph_count / 5);
     if rem(graph_count, 5) > 0
         line = line + 1;
     end
     points.flag = false;
+    tile = tiledlayout(line, 5);
+    tile.TileSpacing = 'compact';
+    tile.Padding  = 'compact';
     % 各グラフの表示
     for i = 1:graph_count
         colormap('jet');
@@ -32,12 +35,12 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
             t = t + plot_range.interval;
             index = index + plot_range.interval;
         end
-        % 横に5つを最大として並べる
-        if graph_count < 5
-            subplot(1, graph_count, i);
-        else
-            subplot(line, 5, i);
-        end
+%         % 横に5つを最大として並べる
+%         if graph_count < 5
+%             subplot(1, graph_count, i);
+%         else
+%             subplot(line, 5, i);
+%         end
         % カラーマップの計算・描画
         points = mbf_coverHeadLayout(fig, points);
         Vq = griddata(position_map(:, 2), position_map(:, 3), data.average(index, :), Xq, Yq);
@@ -47,7 +50,7 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
         set(c, 'LineColor', 'none');
         set(c, 'FaceAlpha', 0.8);
         clim([plot_range.y_start plot_range.y_end]);
-        title(strcat(num2str(t), 'ms'));
+        title(strcat('\fontsize{16}', num2str(t), 'ms'));
         % 横軸・縦軸の非表示
         ax = gca;
         ax.XTickLabel = cell(size(ax.XTickLabel));
@@ -57,6 +60,6 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
         clear c;
     end
     c = colorbar('southoutside');
-    c.Position(1:4) = [0.1, 0.06, 0.8, 0.01];
+    c.Position(1:4) = [0.1, 0.06, 0.8, 0.03];
     props.fig = fig;
 end

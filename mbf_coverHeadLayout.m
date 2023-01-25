@@ -32,5 +32,5 @@ function points = mbf_coverHeadLayout(fig, points)
     points = mbf_coverBrainLayout(fig, points);
     xlim([-0.6 0.6]);
     ylim([-0.6 0.6]);
-    pbaspect([1 1 1]);
+    %pbaspect([1 1 1]);
 end

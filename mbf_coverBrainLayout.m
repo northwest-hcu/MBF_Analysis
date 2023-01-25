@@ -5,8 +5,8 @@ function points = mbf_coverBrainLayout(fig, points)
     img = imread('./brain.png');
     img = flip(img);
     [h, w, ~] = size(img);
-    y_start = -0.35;
-    y_end = 0.35;
+    y_start = -0.55;
+    y_end = 0.55;
     x_start = y_start * (w / h);
     x_end = y_end * (w / h);
     
@@ -18,16 +18,16 @@ function points = mbf_coverBrainLayout(fig, points)
         for i=1:h
             for j=1:w
                 if img(i, j, :) <= [200 200 200] % RGB value
-                    % img_points(i, j) = 1; % transparent rate
                     y = ((y_end - y_start) / h) * i + y_start;
                     x = ((x_end - x_start) / w) * j + x_start;
                     data = zeros(1, 2);
-                    data(1, 1) = x;
-                    data(1, 2) = y;
+                    data(1, 1) = x * (2/pi);
+                    data(1, 2) = y * (2/pi);
                     points.data = vertcat(points.data, data);
                     plot(x, y, '.', 'MarkerSize', 1, 'MarkerFaceColor', 'none', 'MarkerEdgeColor', [0.5 0.5 0.5]);
                 end
             end
         end
     end
+    pbaspect([w/max([w h]) h/max([w h]) 1]);
 end

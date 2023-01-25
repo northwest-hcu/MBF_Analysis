@@ -15,10 +15,7 @@ function props = mbf_viewPlot(fig, labels, file_path, move_range, window_name, p
         subplot('Position', pos);
         plot(units, values(:, ch),'LineWidth',1);
         hold on;
-        %title(strcat(num2str(ch), ' ch'));
-        if ch == 57
-            title('Cz');
-        end
+        title(strcat(num2str(ch), ' ch'));
         xlim([plot_range.x_start plot_range.x_end]);
         ylim([plot_range.y_start plot_range.y_end]);
     end
