@@ -5,12 +5,12 @@ function points = mbf_coverBrainLayout(fig, points)
     img = imread('./brain.png');
     img = flip(img);
     [h, w, ~] = size(img);
-    y_start = -0.55;
-    y_end = 0.55;
-%     x_start = y_start * (w / h);
-%     x_end = y_end * (w / h);
-    x_start = -0.45;
-    x_end = 0.45;
+    y_start = -0.44;
+    y_end = 0.47;
+    x_start = -0.37 * (w / h);
+    x_end = 0.37 * (w / h);
+%     x_start = -0.28;
+%     x_end = 0.28;
     
     if points.flag
         plot(points.data(:, 1), points.data(:, 2), '.', 'MarkerSize', 1, 'MarkerFaceColor', 'none', 'MarkerEdgeColor', [0.5 0.5 0.5]);
@@ -31,5 +31,5 @@ function points = mbf_coverBrainLayout(fig, points)
             end
         end
     end
-    pbaspect([w/max([w h]) h/max([w h]) 1]);
+    % pbaspect([w/max([w h]) h/max([w h]) 1]);
 end
