@@ -19,11 +19,10 @@ function position_map = mbf_getPosition(custom)
             end
         end
     end
-    if custom
-        end_index = find(channels(:, 1) == 0);
-        end_index = end_index(1) - 1;
+    end_matrix = find(channels(:,1) == 0);
+    if isempty(end_matrix)
+        position_map = channels(1:height(csv_matrix), 1:3);
     else
-        end_index = height(csv_matrix);
+        position_map = channels(1:end_matrix - 1, 1:3);
     end
-    position_map = channels(1:end_index(1), 1:3);
 end
