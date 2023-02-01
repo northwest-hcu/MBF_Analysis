@@ -1,4 +1,4 @@
-function points = mbf_coverHeadLayout(fig, points)
+function points = mbf_coverHeadLayout(fig)
     % figureオブジェクトをマウント
     figure(fig);
     hold on;
@@ -15,7 +15,7 @@ function points = mbf_coverHeadLayout(fig, points)
 %     plot(layoutline4(:, 1), layoutline4(:, 2), 'k', 'LineWidth',2);
 %     plot(layoutline5(:, 1), layoutline5(:, 2), 'k', 'LineWidth',2);
     
-    points = mbf_coverBrainLayout(fig, points);
+    mbf_coverBrainLayout(fig);
     xlim([-0.6 0.6]);
     ylim([-0.6 0.6]);
     % pbaspect([1 1 1]);

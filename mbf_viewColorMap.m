@@ -20,7 +20,6 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
     if rem(graph_count, 5) > 0
         line = line + 1;
     end
-    points.flag = false;
     tile = tiledlayout(line, 5);
     tile.TileSpacing = 'compact';
     tile.Padding  = 'compact';
@@ -43,7 +42,7 @@ function props = mbf_viewColorMap(file_list, move_range, window_name, plot_range
 %             subplot(line, 5, i);
 %         end
         % カラーマップの計算・描画
-        points = mbf_coverHeadLayout(fig, points);
+        mbf_coverHeadLayout(fig);
         Vq = griddata(position_map(:, 2), position_map(:, 3), data.average(index, :), Xq, Yq);
         % 等高線行列とcontourオブジェクトを得る(前者は使わないため破棄)
         [~, c] = contourf(Xq, Yq, Vq);
